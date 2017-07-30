@@ -1,8 +1,32 @@
 {"frames": {
 
+"ice-bullet.png":
+{
+	"frame": {"x":126,"y":32,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+"icecandy.png":
+{
+	"frame": {"x":73,"y":1,"w":28,"h":26},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":26},
+	"sourceSize": {"w":28,"h":26}
+},
+"jetpack.png":
+{
+	"frame": {"x":100,"y":32,"w":24,"h":24},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":24},
+	"sourceSize": {"w":24,"h":24}
+},
 "penguin-jet.png":
 {
-	"frame": {"x":73,"y":1,"w":25,"h":29},
+	"frame": {"x":103,"y":1,"w":25,"h":29},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":25,"h":29},
@@ -10,7 +34,7 @@
 },
 "penguin.png":
 {
-	"frame": {"x":73,"y":32,"w":25,"h":29},
+	"frame": {"x":73,"y":29,"w":25,"h":29},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":25,"h":29},
@@ -29,8 +53,8 @@
 	"version": "1.0",
 	"image": "sprites.png",
 	"format": "RGBA8888",
-	"size": {"w":99,"h":62},
+	"size": {"w":143,"h":61},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:40f2ff3f32c28e747d3826476db8b9b6:fc300d7c81d002fb9601f57250bd201d:1eabdf11f75e3a4fe3147baf7b5be24b$"
+	"smartupdate": "$TexturePacker:SmartUpdate:e936036f6cf6e4638d58d6c7bd52ff0c:e22729f3f7faffe20ee626c7d50d6900:1eabdf11f75e3a4fe3147baf7b5be24b$"
 }
 }

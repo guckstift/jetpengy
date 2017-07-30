@@ -6,6 +6,7 @@ maxfallvel = 1000;
 maxrisevel = -1000;
 maxjetxvel = 500;
 fallgrav = 2000;
+jetupgrav = 1000;
 
 var game = new Phaser.Game(
 	900, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update }
@@ -67,9 +68,30 @@ function create()
 	penguin = createPenguin();
 	game.camera.follow(penguin);
 
-	seal = createSeal(0, 0);
+	//seal = createSeal(0, 0);
+
+	seals = game.add.group();
+	candies = game.add.group();
+
+	for(var i=0; i<map.objects.items.length; i++) {
+		var obj = map.objects.items[i];
+
+		switch(obj.type) {
+			case "candy":
+				var candy = createCandy(obj.x + 16, obj.y - 32 + 16);
+				candies.add(candy);
+				break;
+			case "seal":
+				var seal = createSeal(obj.x + 16, obj.y - 32 + 16);
+				seals.add(seal);
+				break;
+		}
+	}
+
+	// spawnNextSealPossibly();
 
 	cursors = this.game.input.keyboard.createCursorKeys();
+	spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
 
 	addEventListener("resize", resizeWindow);
 	resizeWindow();
@@ -86,4 +108,19 @@ function resizeWindow()
 function update()
 {
 	//log(game.time.fps);
+}
+
+function spawnNextSealPossibly()
+{
+	setTimeout(function ()
+		{
+			var seal = createSeal(
+				game.camera.x + innerWidth / 2,
+				game.camera.y - 64
+			);
+			seals.add(seal);
+			spawnNextSealPossibly();
+		},
+		5000 + Math.random() * 5000
+	);
 }

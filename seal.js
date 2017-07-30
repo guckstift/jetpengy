@@ -5,6 +5,7 @@ function createSeal(x,y)
 	game.physics.arcade.enable(seal);
 	game.slopes.enable(seal);
 	seal.anchor.setTo(0.5);
+	seal.enableBody = true;
 	seal.body.slopes.preferY = true;
 	seal.body.bounce.y = 0.3;
 	seal.body.gravity.y = fallgrav;
@@ -24,6 +25,7 @@ function createSeal(x,y)
 function sealUpdate()
 {
 	game.physics.arcade.collide(this, groundmap);
+	game.physics.arcade.collide(this, seals);
 
 	if(this.x + 32 < penguin.x) {
 		this.dir = "r"
@@ -46,7 +48,7 @@ function sealUpdate()
 	this.frameName = "seal.png";
 
 	if(this.body.touching.right || this.body.touching.left) {
-    	this.body.gravity.y = -1000;
+    	this.body.gravity.y = -jetupgrav;
     }
 	else {
     	this.body.gravity.y = fallgrav;
@@ -62,10 +64,6 @@ function sealUpdate()
 		else {
 			this.body.velocity.x = runvel;
 		}
-
-		/*if(cursors.left.isUp && cursors.right.isUp) {
-			this.body.velocity.x *= 0.95;
-		}*/
 	}
 	else {
 
@@ -77,10 +75,6 @@ function sealUpdate()
 		else {
 			this.body.gravity.x = 500;
 		}
-
-		/*if(cursors.left.isUp && cursors.right.isUp) {
-			this.body.gravity.x = 0;
-		}*/
 	}
 
 	if(this.body.velocity.y > maxfallvel) {
@@ -97,4 +91,8 @@ function sealUpdate()
 	}
 
 	game.physics.arcade.collide(this, groundmap);
+
+	if(game.physics.arcade.overlap(this, penguin.emitter)) {
+		this.destroy();
+	}
 }

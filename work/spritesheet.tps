@@ -199,6 +199,20 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">ice-bullet.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>4,4,8,8</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,8,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">icecandy.png</key>
             <key type="filename">penguin-jet.png</key>
             <key type="filename">penguin.png</key>
             <struct type="IndividualSpriteSettings">
@@ -213,11 +227,27 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">seal.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>18,15,35,30</rect>
+                <key>scale9Paddings</key>
+                <rect>18,15,35,30</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
             <filename>penguin.png</filename>
             <filename>penguin-jet.png</filename>
+            <filename>seal.png</filename>
+            <filename>icecandy.png</filename>
+            <filename>ice-bullet.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
