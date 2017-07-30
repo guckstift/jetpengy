@@ -1,7 +1,7 @@
 
 function createSeal(x,y)
 {
-	seal = game.add.sprite(x, y, "sprites", "seal.png");
+	var seal = game.add.sprite(x, y, "sprites", "seal.png");
 	game.physics.arcade.enable(seal);
 	game.slopes.enable(seal);
 	seal.anchor.setTo(0.5);
@@ -93,6 +93,8 @@ function sealUpdate()
 	game.physics.arcade.collide(this, groundmap);
 
 	if(game.physics.arcade.overlap(this, penguin.emitter)) {
+		var jetpack = createJetpack(Math.floor(this.x), Math.floor(this.y));
+		jetpacks.add(jetpack);
 		this.destroy();
 	}
 }

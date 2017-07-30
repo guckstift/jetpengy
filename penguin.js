@@ -1,7 +1,7 @@
 
 function createPenguin()
 {
-	penguin = game.add.sprite(0, 0, "sprites", "penguin.png");
+	var penguin = game.add.sprite(0, 0, "sprites", "penguin.png");
 	game.physics.arcade.enable(penguin);
 	game.slopes.enable(penguin);
 	penguin.anchor.setTo(0.5);
@@ -16,8 +16,10 @@ function createPenguin()
 		penguin.body.collideWorldBounds = true;
 	}, 0);
 
-	penguin.jet = true;
+	penguin.jet = false;
+	penguin.fuel = 0.0;
 	penguin.ice = false;
+	penguin.icefuel = 0.0;
 	penguin.firing = false;
 
 	penguin.update = penguinUpdate;
@@ -54,6 +56,7 @@ function penguinUpdate()
 
 		if(cursors.up.isDown) {
 	    	this.body.gravity.y = -jetupgrav;
+			this.fuel -= 0.002;
 	    }
 		else {
 	    	this.body.gravity.y = fallgrav;
@@ -115,6 +118,12 @@ function penguinUpdate()
 		}
 	}
 
+	if(this.fuel <= 0) {
+		this.jet = false;
+		penguin.body.gravity.y = fallgrav;
+		penguin.body.gravity.x = 0;
+	}
+
 	if(this.body.velocity.y > maxfallvel) {
 		this.body.velocity.y = maxfallvel;
 	}
@@ -133,13 +142,12 @@ function penguinUpdate()
 		function (penguin, candy) {
 			candy.destroy();
 			penguin.ice = true;
+			penguin.icefuel = 1.0;
 		},
 		null, this
 	);
 
-	if(spaceKey.isDown && this.ice) {
-		log("fire");
-		this.ice = false;
+	if(spaceKey.isDown && this.ice && !this.firing) {
 		this.firing = true;
 		penguin.emitter.flow(350, 20, 5, -1);
 		penguin.emitter.on = true;
@@ -154,9 +162,32 @@ function penguinUpdate()
 		this.emitter.forEachAlive(function(particle) {
 			particle.alpha = game.math.clamp(particle.lifespan / 350, 0, 1);
 		}, this);
+
+		this.icefuel -= 0.004;
+
+		if(this.icefuel <= 0) {
+			this.firing = false;
+			this.ice = false;
+			this.icefuel = 0.0;
+			this.emitter.on = false;
+		}
 	}
 
 	if(this.firing && spaceKey.isUp) {
-		penguin.emitter.on = false;
+		this.firing = false;
+		this.emitter.on = false;
 	}
+
+	game.physics.arcade.overlap(
+		this, jetpacks,
+		function (penguin, jetpack) {
+			jetpack.destroy();
+			penguin.jet = true;
+			penguin.fuel = 1.0;
+		},
+		null, this
+	);
+
+	updateJetBar(this.jet, this.fuel);
+	updateIceBar(this.ice, this.icefuel);
 }

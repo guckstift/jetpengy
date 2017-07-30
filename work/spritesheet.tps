@@ -212,6 +212,20 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">icebar.png</key>
+            <key type="filename">jetbar.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,4,64,8</rect>
+                <key>scale9Paddings</key>
+                <rect>32,4,64,8</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">icecandy.png</key>
             <key type="filename">penguin-jet.png</key>
             <key type="filename">penguin.png</key>
@@ -224,6 +238,19 @@
                 <rect>8,8,16,16</rect>
                 <key>scale9Paddings</key>
                 <rect>8,8,16,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">jetpack.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,6,12,12</rect>
+                <key>scale9Paddings</key>
+                <rect>6,6,12,12</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -248,6 +275,9 @@
             <filename>seal.png</filename>
             <filename>icecandy.png</filename>
             <filename>ice-bullet.png</filename>
+            <filename>jetpack.png</filename>
+            <filename>jetbar.png</filename>
+            <filename>icebar.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

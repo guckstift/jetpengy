@@ -72,6 +72,7 @@ function create()
 
 	seals = game.add.group();
 	candies = game.add.group();
+	jetpacks = game.add.group();
 
 	for(var i=0; i<map.objects.items.length; i++) {
 		var obj = map.objects.items[i];
@@ -89,6 +90,14 @@ function create()
 	}
 
 	// spawnNextSealPossibly();
+
+	jetBar = game.add.sprite(16, 16, "sprites", "jetbar.png");
+	jetBar.fixedToCamera = true;
+	jetBar.visible = false;
+
+	iceBar = game.add.sprite(16, 48, "sprites", "icebar.png");
+	iceBar.fixedToCamera = true;
+	iceBar.visible = false;
 
 	cursors = this.game.input.keyboard.createCursorKeys();
 	spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
@@ -123,4 +132,17 @@ function spawnNextSealPossibly()
 		},
 		5000 + Math.random() * 5000
 	);
+}
+
+function updateJetBar(vis, fuel)
+{
+	jetBar.visible = vis;
+	jetBar.crop(new Phaser.Rectangle(0, 0, fuel * 128, 16))
+}
+
+
+function updateIceBar(vis, fuel)
+{
+	iceBar.visible = vis;
+	iceBar.crop(new Phaser.Rectangle(0, 0, fuel * 128, 16))
 }
