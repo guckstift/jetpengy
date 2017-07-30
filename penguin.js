@@ -1,7 +1,7 @@
 
-function createPenguin()
+function createPenguin(x, y)
 {
-	var penguin = game.add.sprite(0, 0, "sprites", "penguin.png");
+	var penguin = game.add.sprite(x, y, "sprites", "penguin.png");
 	game.physics.arcade.enable(penguin);
 	game.slopes.enable(penguin);
 	penguin.anchor.setTo(0.5);
@@ -143,6 +143,7 @@ function penguinUpdate()
 			candy.destroy();
 			penguin.ice = true;
 			penguin.icefuel = 1.0;
+			pongping.play();
 		},
 		null, this
 	);

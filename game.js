@@ -17,10 +17,14 @@ function preload()
 	game.load.tilemap("level", "level.json", null, Phaser.Tilemap.TILED_JSON);
 	game.load.image("tiles", "tiles.png");
 	game.load.atlas("sprites", "sprites.png");
+
+	game.load.audio("pongping", "pongping.ogg");
 }
 
 function create()
 {
+	pongping = game.add.audio("pongping");
+
 	game.plugins.add(Phaser.Plugin.ArcadeSlopes);
 	game.slopes.solvers.sat.options.preferY = true;
 	game.stage.backgroundColor = "#a9f0ff";
@@ -85,6 +89,10 @@ function create()
 			case "seal":
 				var seal = createSeal(obj.x + 16, obj.y - 32 + 16);
 				seals.add(seal);
+				break;
+			case "penguin":
+				penguin.x = obj.x + 16;
+				penguin.y = obj.y - 32 + 16;
 				break;
 		}
 	}
