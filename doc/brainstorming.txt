@@ -1,0 +1,25 @@
+## Freitag
+
+### 12:17
+
+* Pingu mit Jetpack fliegt durch eine Welt aus Eis, watschelt teilweise
+* Platformer?
+* Jetpack kann "out of power" gehen. muss also betankt werden
+* betanken mit Fish? Oder mit Öl dass die Menschen (schlimm wie sie sind)
+  dort weggeschmissen haben.
+
+### 14:32
+
+* Feinde: Robben mit Jetpack, vereisen, dann gehen sie kaputt und droppen den
+  Jetpack, kommen aus Wasser
+* Jetpack geht kaputt wenn man zu hart abstürzt, muss neuen ergattern
+* Eisbonbons finden => kann Feinde vereisen mit Eisatem
+* Level: Tile based platform world
+* einfache box collision
+* Spielziel???
+	* Am Ende wartet ein Pinguin-Weibchen (seine Frau) mit Küken auf gesammelten
+	  Fisch
+
+### 15:03
+
+* Tiled tile editor
