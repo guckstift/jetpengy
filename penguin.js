@@ -15,7 +15,7 @@ function createPenguin()
 		penguin.body.collideWorldBounds = true;
 	}, 0);
 
-	penguin.jet = false;
+	penguin.jet = true;
 
 	penguin.update = penguinUpdate;
 
@@ -36,11 +36,11 @@ function penguinUpdate()
 		this.scale.x = +1;
 	}
 
-	if(penguin.jet) {
+	if(this.jet) {
 
 		// JET MODE
 
-		penguin.frameName = "penguin-jet.png";
+		this.frameName = "penguin-jet.png";
 
 		if(cursors.up.isDown) {
 	    	this.body.gravity.y = -1000;
@@ -86,9 +86,9 @@ function penguinUpdate()
 
 		// NO JET MODE
 
-		penguin.frameName = "penguin.png";
+		this.frameName = "penguin.png";
 
-		if(cursors.up.isDown && (this.body.onFloor() || penguin.body.touching.down)) {
+		if(cursors.up.isDown && (this.body.onFloor() || this.body.touching.down)) {
 	    	this.body.velocity.y = -jumpvel;
 	    }
 

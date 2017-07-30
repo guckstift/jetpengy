@@ -1,7 +1,7 @@
 
-function createSeal()
+function createSeal(x,y)
 {
-	seal = game.add.sprite(32 * 3, 0, "sprites", "seal.png");
+	seal = game.add.sprite(x, y, "sprites", "seal.png");
 	game.physics.arcade.enable(seal);
 	game.slopes.enable(seal);
 	seal.anchor.setTo(0.5);
@@ -9,7 +9,8 @@ function createSeal()
 	seal.body.bounce.y = 0.3;
 	seal.body.gravity.y = fallgrav;
 	seal.body.gravity.x = 0;
-	seal.body.velocity.x = -100;
+	seal.body.velocity.x = 0;
+	seal.dir = "r";
 
 	setTimeout(function () {
 		seal.body.collideWorldBounds = true;
@@ -22,5 +23,78 @@ function createSeal()
 
 function sealUpdate()
 {
+	game.physics.arcade.collide(this, groundmap);
+
+	if(this.x + 32 < penguin.x) {
+		this.dir = "r"
+	}
+	else if(this.x - 32 > penguin.x) {
+		this.dir = "l"
+	}
+
+	if(this.dir === "r") {
+		this.scale.x = +1;
+	}
+	else {
+		this.scale.x = -1;
+	}
+
+	//log(this.body.touching.right);
+
+	// JET MODE
+
+	this.frameName = "seal.png";
+
+	if(this.body.touching.right || this.body.touching.left) {
+    	this.body.gravity.y = -1000;
+    }
+	else {
+    	this.body.gravity.y = fallgrav;
+	}
+
+	if(this.body.onFloor()) {
+
+		// STANDING
+
+		if(this.dir === "l") {
+			this.body.velocity.x = -runvel;
+		}
+		else {
+			this.body.velocity.x = runvel;
+		}
+
+		/*if(cursors.left.isUp && cursors.right.isUp) {
+			this.body.velocity.x *= 0.95;
+		}*/
+	}
+	else {
+
+		// IN AIR
+
+		if(this.dir === "l") {
+			this.body.gravity.x = -500;
+		}
+		else {
+			this.body.gravity.x = 500;
+		}
+
+		/*if(cursors.left.isUp && cursors.right.isUp) {
+			this.body.gravity.x = 0;
+		}*/
+	}
+
+	if(this.body.velocity.y > maxfallvel) {
+		this.body.velocity.y = maxfallvel;
+	}
+	else if(this.body.velocity.y < maxrisevel) {
+		this.body.velocity.y = maxrisevel;
+	}
+	else if(this.body.velocity.x > maxjetxvel) {
+		this.body.velocity.x = maxjetxvel;
+	}
+	else if(this.body.velocity.x < -maxjetxvel) {
+		this.body.velocity.x = -maxjetxvel;
+	}
+
 	game.physics.arcade.collide(this, groundmap);
 }

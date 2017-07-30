@@ -67,6 +67,8 @@ function create()
 	penguin = createPenguin();
 	game.camera.follow(penguin);
 
+	seal = createSeal(0, 0);
+
 	cursors = this.game.input.keyboard.createCursorKeys();
 
 	addEventListener("resize", resizeWindow);
