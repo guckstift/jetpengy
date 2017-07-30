@@ -53,7 +53,7 @@ function sealUpdate()
 	this.frameName = "seal.png";
 
 	if(this.body.touching.right || this.body.touching.left) {
-    	this.body.gravity.y = -jetupgrav;
+    	this.body.gravity.y = -seal_jetupgrav;
     }
 	else {
     	this.body.gravity.y = fallgrav;

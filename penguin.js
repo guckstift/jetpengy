@@ -65,9 +65,15 @@ function penguinUpdate()
 		if(cursors.up.isDown) {
 	    	this.body.gravity.y = -jetupgrav;
 			this.fuel -= 0.002;
+
+			// play stream sound
+			startStreamSnd();
 	    }
 		else {
 	    	this.body.gravity.y = fallgrav;
+
+			// stop streamsnd
+			stopStreamSnd();
 		}
 
 		if(this.body.onFloor()) {
@@ -76,19 +82,23 @@ function penguinUpdate()
 
 			if(cursors.left.isDown) {
 				this.body.velocity.x = -runvel;
+				if(!wakwak.isPlaying) wakwak.loopFull();
 			}
 
 			if(cursors.right.isDown) {
 				this.body.velocity.x = runvel;
+				if(!wakwak.isPlaying) wakwak.loopFull();
 			}
 
 			if(cursors.left.isUp && cursors.right.isUp) {
 				this.body.velocity.x *= 0.95;
+				if(wakwak.isPlaying) wakwak.stop();
 			}
 		}
 		else {
 
 			// IN AIR
+			if(wakwak.isPlaying) wakwak.stop();
 
 			if(cursors.left.isDown) {
 				this.body.gravity.x = -500;
@@ -115,14 +125,17 @@ function penguinUpdate()
 
 		if(cursors.left.isDown) {
 			this.body.velocity.x = -runvel;
+			if(!wakwak.isPlaying) wakwak.loopFull();
 		}
 
 		if(cursors.right.isDown) {
 			this.body.velocity.x = runvel;
+			if(!wakwak.isPlaying) wakwak.loopFull();
 		}
 
 		if(cursors.left.isUp && cursors.right.isUp) {
 			this.body.velocity.x *= 0.95;
+			if(wakwak.isPlaying) wakwak.stop();
 		}
 	}
 
@@ -130,6 +143,9 @@ function penguinUpdate()
 		this.jet = false;
 		penguin.body.gravity.y = fallgrav;
 		penguin.body.gravity.x = 0;
+
+		// stop streamsnd
+		stopStreamSnd();
 	}
 
 	if(this.body.velocity.y > maxfallvel) {
@@ -211,6 +227,9 @@ function penguinUpdate()
 
 function penguinDie()
 {
+	if(this.dead)
+		return;
+
 	this.frameName = "penguin-die.png";
 	this.dead = true;
 	this.body.collideWorldBounds = false;
@@ -218,6 +237,9 @@ function penguinDie()
 	this.body.gravity.y = fallgrav;
 	this.body.velocity.x = 0;
 	this.body.velocity.y = -jumpvel * 2;
+
+	waaak.play();
+	wakwak.stop();
 
 	setTimeout(restartLevel, 850);
 }

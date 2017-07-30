@@ -4,11 +4,15 @@ jumpvel = 500;
 runvel = 200;
 maxfallvel = 1000;
 maxrisevel = -1000;
-maxjetxvel = 500;
+maxjetxvel = 250;
 fallgrav = 2000;
 jetupgrav = 1000;
 
 seal_runvel = 180;
+seal_jetupgrav = 1200;
+
+streamPlayId = -1;
+streamPlaying = false;
 
 var game = new Phaser.Game(
 	900, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update }
@@ -21,11 +25,18 @@ function preload()
 	game.load.atlas("sprites", "sprites.png");
 
 	game.load.audio("pongping", "pongping.ogg");
+	game.load.audio("streamsnd", "stream2.ogg");
+	game.load.audio("wakwak", "wakwak.ogg");
+	game.load.audio("waaak", "waaak.ogg");
 }
 
 function create()
 {
 	pongping = game.add.audio("pongping");
+	streamsnd = game.add.audio("streamsnd");
+	streamsnd.allowMultiple = true;
+	wakwak = game.add.audio("wakwak");
+	waaak = game.add.audio("waaak");
 
 	game.plugins.add(Phaser.Plugin.ArcadeSlopes);
 	game.slopes.solvers.sat.options.preferY = true;
@@ -84,20 +95,37 @@ function startLevel()
 		28: "HALF_TOP_RIGHT",
 		29: "HALF_TOP_LEFT",
 		30: "FULL",
-		31: "FULL",
-		32: "FULL",
+		31: "QUARTER_RIGHT_BOTTOM_HIGH",
+		32: "QUARTER_LEFT_BOTTOM_HIGH",
 		33: "FULL",
 		34: "FULL",
 		35: "FULL",
 		36: "FULL",
 		37: "FULL",
 		38: "FULL",
-		39: "FULL",
-		40: "FULL",
+		39: "QUARTER_RIGHT_BOTTOM_LOW",
+		40: "QUARTER_LEFT_BOTTOM_LOW",
+		41: "FULL",
+		42: "FULL",
+		43: "FULL",
+		44: "FULL",
+		45: "FULL",
+		46: "FULL",
+		47: "QUARTER_RIGHT_TOP_HIGH",
+		48: "QUARTER_LEFT_TOP_HIGH",
+		49: "FULL",
+		50: "FULL",
+		51: "FULL",
+		52: "FULL",
+		53: "FULL",
+		54: "FULL",
+		55: "QUARTER_RIGHT_TOP_LOW",
+		56: "QUARTER_LEFT_TOP_LOW",
+		57: "FULL",
 	});
 	map.setCollisionBetween(1, 100, true, "groundmap");
 	groundmap.resizeWorld();
-	//groundmap.debug = true;
+	// groundmap.debug = true;
 
 	//seal = createSeal(0, 0);
 
@@ -142,6 +170,7 @@ function stopLevel()
 {
 	iceBar.destroy();
 	jetBar.destroy();
+	penguin.emitter.destroy();
 	penguin.destroy();
 
 	jetpacks.destroy();
@@ -202,4 +231,27 @@ function updateIceBar(vis, fuel)
 function squareDistBetween(sp1, sp2)
 {
 	return Math.pow(sp1.x - sp2.x, 2) + Math.pow(sp1.y - sp2.y, 2)
+}
+
+function startStreamSnd()
+{
+	if(streamPlaying)
+		return;
+
+	streamPlaying = true;
+
+	streamsnd.play();
+	streamPlayId = setInterval(
+		function () {
+			log("play")
+			streamsnd.play();
+		},
+		1000
+	);
+}
+
+function stopStreamSnd()
+{
+	streamPlaying = false;
+	clearInterval(streamPlayId);
 }
