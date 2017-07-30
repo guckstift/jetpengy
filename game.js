@@ -8,6 +8,8 @@ maxjetxvel = 500;
 fallgrav = 2000;
 jetupgrav = 1000;
 
+seal_runvel = 180;
+
 var game = new Phaser.Game(
 	900, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update }
 );
@@ -37,6 +39,17 @@ function create()
 
 	//game.time.advancedTiming = true;
 
+	cursors = this.game.input.keyboard.createCursorKeys();
+	spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+
+	startLevel();
+
+	addEventListener("resize", resizeWindow);
+	resizeWindow();
+}
+
+function startLevel()
+{
 	map = game.add.tilemap("level");
 	map.addTilesetImage("tiles", "tiles");
 	groundmap = map.createLayer("groundmap");
@@ -64,13 +77,27 @@ function create()
 		21: "FULL",
 		22: "FULL",
 		23: "FULL",
+		24: "FULL",
+		25: "FULL",
+		26: "FULL",
+		27: "FULL",
+		28: "HALF_TOP_RIGHT",
+		29: "HALF_TOP_LEFT",
+		30: "FULL",
+		31: "FULL",
+		32: "FULL",
+		33: "FULL",
+		34: "FULL",
+		35: "FULL",
+		36: "FULL",
+		37: "FULL",
+		38: "FULL",
+		39: "FULL",
+		40: "FULL",
 	});
 	map.setCollisionBetween(1, 100, true, "groundmap");
 	groundmap.resizeWorld();
 	//groundmap.debug = true;
-
-	penguin = createPenguin();
-	game.camera.follow(penguin);
 
 	//seal = createSeal(0, 0);
 
@@ -91,13 +118,14 @@ function create()
 				seals.add(seal);
 				break;
 			case "penguin":
-				penguin.x = obj.x + 16;
-				penguin.y = obj.y - 32 + 16;
+				var penguinX = obj.x + 16;
+				var penguinY = obj.y - 32 + 16;
 				break;
 		}
 	}
 
-	// spawnNextSealPossibly();
+	penguin = createPenguin(penguinX, penguinY);
+	game.camera.follow(penguin);
 
 	jetBar = game.add.sprite(16, 16, "sprites", "jetbar.png");
 	jetBar.fixedToCamera = true;
@@ -107,11 +135,27 @@ function create()
 	iceBar.fixedToCamera = true;
 	iceBar.visible = false;
 
-	cursors = this.game.input.keyboard.createCursorKeys();
-	spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+	// spawnNextSealPossibly();
+}
 
-	addEventListener("resize", resizeWindow);
-	resizeWindow();
+function stopLevel()
+{
+	iceBar.destroy();
+	jetBar.destroy();
+	penguin.destroy();
+
+	jetpacks.destroy();
+	candies.destroy();
+	seals.destroy();
+
+	groundmap.destroy();
+	map.destroy();
+}
+
+function restartLevel()
+{
+	stopLevel();
+	startLevel();
 }
 
 function resizeWindow()
@@ -153,4 +197,9 @@ function updateIceBar(vis, fuel)
 {
 	iceBar.visible = vis;
 	iceBar.crop(new Phaser.Rectangle(0, 0, fuel * 128, 16))
+}
+
+function squareDistBetween(sp1, sp2)
+{
+	return Math.pow(sp1.x - sp2.x, 2) + Math.pow(sp1.y - sp2.y, 2)
 }

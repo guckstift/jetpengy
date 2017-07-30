@@ -27,11 +27,16 @@ function sealUpdate()
 	game.physics.arcade.collide(this, groundmap);
 	game.physics.arcade.collide(this, seals);
 
-	if(this.x + 32 < penguin.x) {
-		this.dir = "r"
+	if(squareDistBetween(this, penguin) < Math.pow(400, 2)) {
+		if(this.x + 32 < penguin.x) {
+			this.dir = "r";
+		}
+		else if(this.x - 32 > penguin.x) {
+			this.dir = "l";
+		}
 	}
-	else if(this.x - 32 > penguin.x) {
-		this.dir = "l"
+	else {
+		this.dir = "";
 	}
 
 	if(this.dir === "r") {
@@ -59,10 +64,13 @@ function sealUpdate()
 		// STANDING
 
 		if(this.dir === "l") {
-			this.body.velocity.x = -runvel;
+			this.body.velocity.x = -seal_runvel;
+		}
+		else if(this.dir === "r") {
+			this.body.velocity.x = seal_runvel;
 		}
 		else {
-			this.body.velocity.x = runvel;
+			this.body.velocity.x = 0;
 		}
 	}
 	else {
@@ -72,8 +80,11 @@ function sealUpdate()
 		if(this.dir === "l") {
 			this.body.gravity.x = -500;
 		}
-		else {
+		else if(this.dir === "r") {
 			this.body.gravity.x = 500;
+		}
+		else {
+			this.body.gravity.x = 0;
 		}
 	}
 

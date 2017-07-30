@@ -2,7 +2,7 @@
 
 "ice-bullet.png":
 {
-	"frame": {"x":233,"y":32,"w":16,"h":16},
+	"frame": {"x":130,"y":37,"w":16,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
@@ -10,7 +10,7 @@
 },
 "icebar.png":
 {
-	"frame": {"x":1,"y":1,"w":128,"h":16},
+	"frame": {"x":100,"y":1,"w":128,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":16},
@@ -18,7 +18,7 @@
 },
 "icecandy.png":
 {
-	"frame": {"x":203,"y":32,"w":28,"h":26},
+	"frame": {"x":100,"y":37,"w":28,"h":26},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":28,"h":26},
@@ -26,7 +26,7 @@
 },
 "jetbar.png":
 {
-	"frame": {"x":1,"y":19,"w":128,"h":16},
+	"frame": {"x":100,"y":19,"w":128,"h":16},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":128,"h":16},
@@ -34,15 +34,23 @@
 },
 "jetpack.png":
 {
-	"frame": {"x":1,"y":37,"w":24,"h":24},
+	"frame": {"x":230,"y":32,"w":24,"h":24},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":24,"h":24},
 	"sourceSize": {"w":24,"h":24}
 },
+"penguin-die.png":
+{
+	"frame": {"x":73,"y":1,"w":25,"h":29},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":25,"h":29},
+	"sourceSize": {"w":25,"h":29}
+},
 "penguin-jet.png":
 {
-	"frame": {"x":203,"y":1,"w":25,"h":29},
+	"frame": {"x":73,"y":32,"w":25,"h":29},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":25,"h":29},
@@ -58,7 +66,7 @@
 },
 "seal.png":
 {
-	"frame": {"x":131,"y":1,"w":70,"h":59},
+	"frame": {"x":1,"y":1,"w":70,"h":59},
 	"rotated": false,
 	"trimmed": false,
 	"spriteSourceSize": {"x":0,"y":0,"w":70,"h":59},
@@ -69,8 +77,8 @@
 	"version": "1.0",
 	"image": "sprites.png",
 	"format": "RGBA8888",
-	"size": {"w":256,"h":62},
+	"size": {"w":256,"h":64},
 	"scale": "1",
-	"smartupdate": "$TexturePacker:SmartUpdate:32daecf8931e7f604d070efac6a1c068:ea23b53500074e82e4a4256977bd97ae:1eabdf11f75e3a4fe3147baf7b5be24b$"
+	"smartupdate": "$TexturePacker:SmartUpdate:4982e1b6ad974240f39e98105ad22438:80e715ca247a0bb5854ae28bfcff1b42:1eabdf11f75e3a4fe3147baf7b5be24b$"
 }
 }

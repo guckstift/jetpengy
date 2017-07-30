@@ -21,8 +21,10 @@ function createPenguin(x, y)
 	penguin.ice = false;
 	penguin.icefuel = 0.0;
 	penguin.firing = false;
+	penguin.dead = false;
 
 	penguin.update = penguinUpdate;
+	penguin.die = penguinDie;
 
 	penguin.emitter = game.add.emitter(30, 30, 70);
 	penguin.emitter.makeParticles("sprites", "ice-bullet.png", 70, true);
@@ -38,6 +40,12 @@ function createPenguin(x, y)
 
 function penguinUpdate()
 {
+	if(this.dead) {
+		this.angle += 10;
+		this.scale.setTo(this.scale.x * 1.1)
+		return;
+	}
+
 	game.physics.arcade.collide(this, groundmap);
 
 	if(cursors.left.isDown) {
@@ -189,6 +197,27 @@ function penguinUpdate()
 		null, this
 	);
 
+	game.physics.arcade.overlap(
+		this, seals,
+		function (penguin, seal) {
+			this.die();
+		},
+		null, this
+	);
+
 	updateJetBar(this.jet, this.fuel);
 	updateIceBar(this.ice, this.icefuel);
+}
+
+function penguinDie()
+{
+	this.frameName = "penguin-die.png";
+	this.dead = true;
+	this.body.collideWorldBounds = false;
+	this.body.gravity.x = 0;
+	this.body.gravity.y = fallgrav;
+	this.body.velocity.x = 0;
+	this.body.velocity.y = -jumpvel * 2;
+
+	setTimeout(restartLevel, 850);
 }
