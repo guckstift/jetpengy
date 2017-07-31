@@ -35,6 +35,42 @@ function createPenguin(x, y)
     penguin.emitter.gravity = 0;
 	penguin.emitter.on = false;
 
+	penguin.animations.add(
+		"run",
+		["penguin.png", "penguin-1.png", "penguin.png", "penguin-2.png"],
+		10, true, false
+	);
+
+	penguin.animations.add(
+		"stand",
+		["penguin.png"],
+		10, true, false
+	);
+
+	penguin.animations.add(
+		"jet",
+		["penguin-jet.png"],
+		10, true, false
+	);
+
+	penguin.animations.add(
+		"jetup",
+		["penguin-jetup.png"],
+		10, true, false
+	);
+
+	penguin.animations.add(
+		"jetrun",
+		["penguin-jet.png", "penguin-1-jet.png", "penguin-jet.png", "penguin-2-jet.png"],
+		10, true, false
+	);
+
+	penguin.animations.add(
+		"die",
+		["penguin-die.png"],
+		10, true, false
+	);
+
 	return penguin;
 }
 
@@ -60,14 +96,14 @@ function penguinUpdate()
 
 		// JET MODE
 
-		this.frameName = "penguin-jet.png";
-
 		if(cursors.up.isDown) {
 	    	this.body.gravity.y = -jetupgrav;
 			this.fuel -= 0.002;
 
 			// play stream sound
 			startStreamSnd();
+
+			this.animations.play("jetup");
 	    }
 		else {
 	    	this.body.gravity.y = fallgrav;
@@ -83,21 +119,25 @@ function penguinUpdate()
 			if(cursors.left.isDown) {
 				this.body.velocity.x = -runvel;
 				if(!wakwak.isPlaying) wakwak.loopFull();
+				this.animations.play("jetrun");
 			}
 
 			if(cursors.right.isDown) {
 				this.body.velocity.x = runvel;
 				if(!wakwak.isPlaying) wakwak.loopFull();
+				this.animations.play("jetrun");
 			}
 
 			if(cursors.left.isUp && cursors.right.isUp) {
 				this.body.velocity.x *= 0.95;
 				if(wakwak.isPlaying) wakwak.stop();
+				this.animations.play("jet");
 			}
 		}
 		else {
 
 			// IN AIR
+
 			if(wakwak.isPlaying) wakwak.stop();
 
 			if(cursors.left.isDown) {
@@ -117,8 +157,6 @@ function penguinUpdate()
 
 		// NO JET MODE
 
-		this.frameName = "penguin.png";
-
 		if(cursors.up.isDown && (this.body.onFloor() || this.body.touching.down)) {
 	    	this.body.velocity.y = -jumpvel;
 	    }
@@ -126,16 +164,19 @@ function penguinUpdate()
 		if(cursors.left.isDown) {
 			this.body.velocity.x = -runvel;
 			if(!wakwak.isPlaying) wakwak.loopFull();
+			this.animations.play("run");
 		}
 
 		if(cursors.right.isDown) {
 			this.body.velocity.x = runvel;
 			if(!wakwak.isPlaying) wakwak.loopFull();
+			this.animations.play("run");
 		}
 
 		if(cursors.left.isUp && cursors.right.isUp) {
 			this.body.velocity.x *= 0.95;
 			if(wakwak.isPlaying) wakwak.stop();
+			this.animations.play("stand");
 		}
 	}
 
@@ -176,6 +217,7 @@ function penguinUpdate()
 		this.firing = true;
 		penguin.emitter.flow(350, 20, 5, -1);
 		penguin.emitter.on = true;
+		startIceSnd();
 	}
 
 	if(this.firing) {
@@ -195,12 +237,14 @@ function penguinUpdate()
 			this.ice = false;
 			this.icefuel = 0.0;
 			this.emitter.on = false;
+			stopIceSnd();
 		}
 	}
 
 	if(this.firing && spaceKey.isUp) {
 		this.firing = false;
 		this.emitter.on = false;
+		stopIceSnd();
 	}
 
 	game.physics.arcade.overlap(
@@ -209,6 +253,7 @@ function penguinUpdate()
 			jetpack.destroy();
 			penguin.jet = true;
 			penguin.fuel = 1.0;
+			jetpacksnd.play();
 		},
 		null, this
 	);
@@ -216,7 +261,8 @@ function penguinUpdate()
 	game.physics.arcade.overlap(
 		this, seals,
 		function (penguin, seal) {
-			this.die();
+			if(!seal.iced)
+				this.die();
 		},
 		null, this
 	);
@@ -230,6 +276,8 @@ function penguinDie()
 	if(this.dead)
 		return;
 
+	this.animations.play("die");
+
 	this.frameName = "penguin-die.png";
 	this.dead = true;
 	this.body.collideWorldBounds = false;
@@ -238,8 +286,12 @@ function penguinDie()
 	this.body.velocity.x = 0;
 	this.body.velocity.y = -jumpvel * 2;
 
+	this.emitter.destroy();
+
 	waaak.play();
 	wakwak.stop();
+	stopIceSnd();
+	stopStreamSnd();
 
 	setTimeout(restartLevel, 850);
 }

@@ -14,6 +14,9 @@ seal_jetupgrav = 1200;
 streamPlayId = -1;
 streamPlaying = false;
 
+icePlayId = -1;
+icePlaying = false;
+
 var game = new Phaser.Game(
 	900, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update }
 );
@@ -22,12 +25,21 @@ function preload()
 {
 	game.load.tilemap("level", "level.json", null, Phaser.Tilemap.TILED_JSON);
 	game.load.image("tiles", "tiles.png");
+	game.load.image("sky", "sky.jpg");
 	game.load.atlas("sprites", "sprites.png");
 
 	game.load.audio("pongping", "pongping.ogg");
 	game.load.audio("streamsnd", "stream2.ogg");
 	game.load.audio("wakwak", "wakwak.ogg");
 	game.load.audio("waaak", "waaak.ogg");
+	game.load.audio("icebreath", "icebreath.ogg");
+	game.load.audio("ow1", "ow1.ogg");
+	game.load.audio("ow2", "ow2.ogg");
+	game.load.audio("iced", "iced.ogg");
+	game.load.audio("jetpack", "jetpack.ogg");
+	game.load.audio("wifewak1", "wifewak1.ogg");
+	game.load.audio("wifewak2", "wifewak2.ogg");
+	game.load.audio("wifewak3", "wifewak3.ogg");
 }
 
 function create()
@@ -35,8 +47,17 @@ function create()
 	pongping = game.add.audio("pongping");
 	streamsnd = game.add.audio("streamsnd");
 	streamsnd.allowMultiple = true;
+	icebreath = game.add.audio("icebreath");
+	icebreath.allowMultiple = true;
 	wakwak = game.add.audio("wakwak");
 	waaak = game.add.audio("waaak");
+	ow1 = game.add.audio("ow1");
+	ow2 = game.add.audio("ow2");
+	iced = game.add.audio("iced");
+	jetpacksnd = game.add.audio("jetpack");
+	wifewak1 = game.add.audio("wifewak1");
+	wifewak2 = game.add.audio("wifewak2");
+	wifewak3 = game.add.audio("wifewak3");
 
 	game.plugins.add(Phaser.Plugin.ArcadeSlopes);
 	game.slopes.solvers.sat.options.preferY = true;
@@ -61,36 +82,21 @@ function create()
 
 function startLevel()
 {
+	skybg = game.add.sprite(0, 0, "sky");
+	skybg.anchor.setTo(0);
+	skybg.fixedToCamera = true;
+
 	map = game.add.tilemap("level");
 	map.addTilesetImage("tiles", "tiles");
 	groundmap = map.createLayer("groundmap");
 	game.slopes.convertTilemapLayer(groundmap, {
-		1: "FULL",
-		2: "FULL",
-		3: "FULL",
+		1: "FULL", 2: "FULL", 3: "FULL",
 		4: "HALF_BOTTOM_RIGHT",
 		5: "HALF_BOTTOM_LEFT",
-		6: "FULL",
-		7: "FULL",
-		8: "FULL",
-		9: "FULL",
-		10: "FULL",
-		11: "FULL",
-		12: "FULL",
-		13: "FULL",
-		14: "FULL",
-		15: "FULL",
-		16: "FULL",
-		17: "FULL",
-		18: "FULL",
-		19: "FULL",
-		20: "FULL",
-		21: "FULL",
-		22: "FULL",
-		23: "FULL",
-		24: "FULL",
-		25: "FULL",
-		26: "FULL",
+		6: "FULL", 7: "FULL", 8: "FULL", 9: "FULL", 10: "FULL", 11: "FULL", 12: "FULL",
+		13: "FULL", 14: "FULL", 15: "FULL", 16: "FULL", 17: "FULL", 18: "FULL",
+		19: "FULL", 20: "FULL", 21: "FULL", 22: "FULL", 23: "FULL", 24: "FULL",
+		25: "FULL", 26: "FULL",
 		27: "FULL",
 		28: "HALF_TOP_RIGHT",
 		29: "HALF_TOP_LEFT",
@@ -149,17 +155,25 @@ function startLevel()
 				var penguinX = obj.x + 16;
 				var penguinY = obj.y - 32 + 16;
 				break;
+			case "wife":
+				var wifeX = obj.x + 16;
+				var wifeY = obj.y - 32 + 16;
+				break;
 		}
 	}
 
+	wife = createPenguinWife(wifeX, wifeY);
 	penguin = createPenguin(penguinX, penguinY);
 	game.camera.follow(penguin);
 
+
 	jetBar = game.add.sprite(16, 16, "sprites", "jetbar.png");
+	jetBar.scale.setTo(1.5);
 	jetBar.fixedToCamera = true;
 	jetBar.visible = false;
 
 	iceBar = game.add.sprite(16, 48, "sprites", "icebar.png");
+	iceBar.scale.setTo(1.5);
 	iceBar.fixedToCamera = true;
 	iceBar.visible = false;
 
@@ -170,8 +184,9 @@ function stopLevel()
 {
 	iceBar.destroy();
 	jetBar.destroy();
-	penguin.emitter.destroy();
 	penguin.destroy();
+	wife.emitter.destroy();
+	wife.destroy();
 
 	jetpacks.destroy();
 	candies.destroy();
@@ -198,6 +213,8 @@ function resizeWindow()
 function update()
 {
 	//log(game.time.fps);
+	skybg.cameraOffset.x = - game.world.camera.position.x * (skybg.width-innerWidth) / game.world.width;
+	skybg.cameraOffset.y = - game.world.camera.position.y * (skybg.height-innerHeight) / game.world.height;
 }
 
 function spawnNextSealPossibly()
@@ -243,7 +260,6 @@ function startStreamSnd()
 	streamsnd.play();
 	streamPlayId = setInterval(
 		function () {
-			log("play")
 			streamsnd.play();
 		},
 		1000
@@ -254,4 +270,27 @@ function stopStreamSnd()
 {
 	streamPlaying = false;
 	clearInterval(streamPlayId);
+}
+
+function startIceSnd()
+{
+	if(icePlaying)
+		return;
+
+	icePlaying = true;
+
+	icebreath.play();
+	icePlayId = setInterval(
+		function () {
+			icebreath.play();
+		},
+		1797
+	);
+}
+
+function stopIceSnd()
+{
+	icePlaying = false;
+	clearInterval(icePlayId);
+	icebreath.stop();
 }

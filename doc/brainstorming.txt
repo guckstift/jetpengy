@@ -1,4 +1,4 @@
-## Freitag
+## Samstag
 
 ### 12:17
 
@@ -23,3 +23,13 @@
 ### 15:03
 
 * Tiled tile editor
+
+## Sonntag
+
+### 00:49
+
+* sounds:
+  * robben
+  * eisatem
+  * eis candy einsammeln
+* babys und frau pinguin am ziel

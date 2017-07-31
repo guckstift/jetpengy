@@ -12,12 +12,14 @@ function createSeal(x,y)
 	seal.body.gravity.x = 0;
 	seal.body.velocity.x = 0;
 	seal.dir = "r";
+	seal.iced = false;
 
 	setTimeout(function () {
 		seal.body.collideWorldBounds = true;
 	}, 0);
 
 	seal.update = sealUpdate;
+	seal.iceIn = sealIceIn;
 
 	return seal;
 }
@@ -27,12 +29,21 @@ function sealUpdate()
 	game.physics.arcade.collide(this, groundmap);
 	game.physics.arcade.collide(this, seals);
 
+	if(this.iced)
+		return;
+
 	if(squareDistBetween(this, penguin) < Math.pow(400, 2)) {
 		if(this.x + 32 < penguin.x) {
-			this.dir = "r";
+			if(this.dir != "r") {
+				this.dir = "r";
+				ow1.play();
+			}
 		}
 		else if(this.x - 32 > penguin.x) {
-			this.dir = "l";
+			if(this.dir != "l") {
+				this.dir = "l";
+				ow2.play();
+			}
 		}
 	}
 	else {
@@ -106,6 +117,18 @@ function sealUpdate()
 	if(game.physics.arcade.overlap(this, penguin.emitter)) {
 		var jetpack = createJetpack(Math.floor(this.x), Math.floor(this.y));
 		jetpacks.add(jetpack);
-		this.destroy();
+		this.iceIn();
 	}
+}
+
+function sealIceIn()
+{
+	this.iced = true;
+	this.frameName = "seal-iced.png";
+	this.body.velocity.x = 0;
+	this.body.gravity.x = 0;
+	this.body.gravity.y = fallgrav;
+	iced.play();
+
+	//this.destroy();
 }

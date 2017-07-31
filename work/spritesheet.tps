@@ -6,7 +6,7 @@
         <key>texturePackerVersion</key>
         <string>4.4.0</string>
         <key>fileName</key>
-        <string>/home/danny/Projekte/ld39-phaser/work/spritesheet.tps</string>
+        <string>/home/danny/Dropbox/Projekte/Projekte/ld39-phaser/work/spritesheet.tps</string>
         <key>autoSDSettings</key>
         <array>
             <struct type="AutoSDSettings">
@@ -199,6 +199,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">heart.png</key>
             <key type="filename">ice-bullet.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -254,6 +255,38 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">penguin-1-jet.png</key>
+            <key type="filename">penguin-1.png</key>
+            <key type="filename">penguin-2-jet.png</key>
+            <key type="filename">penguin-2.png</key>
+            <key type="filename">penguin-die.png</key>
+            <key type="filename">penguin-jetup.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,7,13,15</rect>
+                <key>scale9Paddings</key>
+                <rect>6,7,13,15</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">penguin-wife.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,9,13,18</rect>
+                <key>scale9Paddings</key>
+                <rect>6,9,13,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">seal-iced.png</key>
             <key type="filename">seal.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -278,6 +311,15 @@
             <filename>jetpack.png</filename>
             <filename>jetbar.png</filename>
             <filename>icebar.png</filename>
+            <filename>penguin-die.png</filename>
+            <filename>penguin-1.png</filename>
+            <filename>penguin-2.png</filename>
+            <filename>penguin-1-jet.png</filename>
+            <filename>penguin-2-jet.png</filename>
+            <filename>penguin-jetup.png</filename>
+            <filename>seal-iced.png</filename>
+            <filename>penguin-wife.png</filename>
+            <filename>heart.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
